@@ -39,6 +39,7 @@ const MealCard: React.FC<MealCardProps> = ({
   onLockToggle,
   onGenerateTitle,
   onRedrawAttribute,
+  onDrawAgain,
 }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -172,6 +173,21 @@ const MealCard: React.FC<MealCardProps> = ({
               </ListItem>
             ))}
           </List>
+          <Button
+            onClick={() => onDrawAgain(id)}
+            size="small"
+            variant="outlined"
+            sx={{ 
+              minWidth: 'auto',
+              padding: '1px 6px',
+              fontSize: '0.6rem',
+              lineHeight: 1,
+              height: 'auto',
+              mt: 1
+            }}
+          >
+            Draw Again
+          </Button>
         </CardContent>
       </Card>
       <Button

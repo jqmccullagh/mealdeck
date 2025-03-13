@@ -23,6 +23,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -184,7 +185,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                         p: 0.5
                       }}
                     >
-                      <CloseIcon fontSize="small" />
+                      <DeleteIcon fontSize="small" />
                     </IconButton>
                   }
                   sx={{ 
