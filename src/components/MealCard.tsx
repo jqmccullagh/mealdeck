@@ -11,7 +11,7 @@ import {
   Button,
   Box,
 } from '@mui/material';
-import CasinoIcon from '@mui/icons-material/Casino';
+import CasinoOutlinedIcon from '@mui/icons-material/CasinoOutlined';
 
 interface MealAttribute {
   category: string;
@@ -76,7 +76,7 @@ const MealCard: React.FC<MealCardProps> = ({
                   textTransform: 'uppercase',
                   lineHeight: 1.2,
                   fontWeight: 600,
-                  color: '#4a148c'
+                  color: '#4a0072'
                 }}
               >
                 {date.split(',')[0]}
@@ -131,7 +131,8 @@ const MealCard: React.FC<MealCardProps> = ({
                 key={attr.category}
                 disableGutters
                 sx={{
-                  py: 0.5,
+                  py: 0,
+                  pt: '12px',
                   px: 0,
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -142,16 +143,21 @@ const MealCard: React.FC<MealCardProps> = ({
                   primary={attr.category === 'Starch' ? 'Base' : attr.category}
                   secondary={attr.value}
                   sx={{
+                    m: 0,
                     '& .MuiListItemText-primary': {
-                      fontSize: { xs: '0.65rem', sm: '0.7rem' },
+                      fontSize: '12px',
                       color: 'text.secondary',
-                      fontWeight: 400
+                      fontWeight: 600,
+                      lineHeight: 1.5,
+                      fontFamily: 'Big Shoulders Display'
                     },
                     '& .MuiListItemText-secondary': {
-                      fontSize: { xs: '0.75rem', sm: '0.85rem' },
+                      fontSize: '14px',
                       color: 'text.primary',
-                      fontWeight: 500
-                    },
+                      fontWeight: 500,
+                      lineHeight: 1.5,
+                      fontFamily: 'Raleway'
+                    }
                   }}
                 />
                 <ListItemSecondaryAction>
@@ -161,13 +167,19 @@ const MealCard: React.FC<MealCardProps> = ({
                     onClick={() => onRedrawAttribute(id, attr.category)}
                     disabled={isLocked}
                     sx={{
-                      padding: '4px',
+                      padding: '2px',
                       '& .MuiSvgIcon-root': {
-                        fontSize: '0.9rem'
+                        fontSize: '1.31rem',
+                        color: '#DAA520',
+                        transform: 'rotate(30deg)',
+                        transition: 'transform 0.2s ease-in-out',
+                        '&:hover': {
+                          transform: 'rotate(210deg)'
+                        }
                       }
                     }}
                   >
-                    <CasinoIcon fontSize="small" />
+                    <CasinoOutlinedIcon fontSize="small" />
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>

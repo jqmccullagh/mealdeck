@@ -209,7 +209,7 @@ const App: React.FC = () => {
       <CssBaseline />
       <style>
         {`
-          @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700&family=Raleway:wght@400;500;600&display=swap');
           
           * {
             box-sizing: border-box;
@@ -220,7 +220,7 @@ const App: React.FC = () => {
             padding: 0;
             min-height: 100vh;
             width: 100%;
-            font-family: 'Lato', sans-serif;
+            font-family: 'Big Shoulders Display', sans-serif;
             background-color: #f5f5f5;
           }
 
@@ -259,9 +259,12 @@ const App: React.FC = () => {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <StyleIcon sx={{ fontSize: '2rem', color: 'primary.main' }} />
                 <Typography variant="h1" sx={{ 
-                  fontSize: '1.5rem', 
-                  fontWeight: 600,
+                  fontSize: '2rem', 
+                  fontWeight: 700,
                   m: 0,
+                  fontFamily: 'Big Shoulders Display',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
                 }}>
                   MealDeck
                 </Typography>
@@ -325,7 +328,8 @@ const App: React.FC = () => {
                         fontWeight: 500,
                         order: { xs: -1, sm: 0 },
                         width: { xs: '100%', sm: 'auto' },
-                        textAlign: { xs: 'center', sm: 'left' }
+                        textAlign: { xs: 'center', sm: 'left' },
+                        fontFamily: 'Big Shoulders Display'
                       }}
                     >
                       {weekInfo.displayRange}
