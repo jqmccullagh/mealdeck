@@ -280,7 +280,8 @@ const App: React.FC = () => {
         <Box sx={{
           display: 'flex',
           justifyContent: 'center',
-          width: '100%'
+          width: '100%',
+          padding: { xs: '24px', sm: '32px', md: '40px' }
         }}>
           <Box 
             sx={{ 
@@ -294,10 +295,9 @@ const App: React.FC = () => {
           >
             <Box sx={{ 
               flex: 1,
-              py: 3,
-              px: 3,
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              gap: { xs: 3, sm: 4 }
             }}>
               {/* Week Navigation */}
               <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -352,22 +352,32 @@ const App: React.FC = () => {
                     sm: 'repeat(2, 1fr)',
                     md: 'repeat(4, 1fr)',
                     lg: 'repeat(5, 1fr)',
-                    xl: 'repeat(7, 1fr)'
+                    xl: 'repeat(7, 185px)'  // Fixed width of 185px at xl breakpoint
                   },
-                  gap: { 
-                    xs: 3,    // 24px gap on mobile
-                    sm: 2.5,  // 20px gap on tablet
-                    md: 3     // 24px gap on desktop
+                  rowGap: { 
+                    xs: 8,
+                    sm: 8,
+                    md: 8
+                  },
+                  columnGap: {
+                    xs: 4,
+                    sm: 4,
+                    md: 4,
+                    xl: 2.5  // 20px gap at xl
                   },
                   width: '100%',
-                  mb: { xs: 10, sm: 12 } // Added bottom margin to account for fixed button container
+                  mb: { xs: 12, sm: 14 },
+                  px: { xs: 2, sm: 3, md: 4, xl: 2 },
+                  py: { xs: 3, sm: 4, md: 5 },
+                  justifyContent: 'center'  // Center the grid when using fixed widths
                 }}
               >
                 {mealCards.map((card) => (
                   <Box 
                     key={card.id}
                     sx={{
-                      height: '280px'
+                      height: '340px',
+                      width: '100%'
                     }}
                   >
                     <MealCard
