@@ -1,0 +1,36 @@
+.app {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.meal-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.meal-card.locked {
+  background-color: #e0e0e0;
+}
+
+.meal-card .attributes {
+  margin: 10px 0;
+}
+
+.meal-card .attribute {
+  margin-bottom: 5px;
+}
+
+.meal-card .recipe-title {
+  margin-top: 10px;
+  font-weight: bold;
+}
