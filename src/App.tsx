@@ -354,8 +354,13 @@ const App: React.FC = () => {
                     lg: 'repeat(5, 1fr)',
                     xl: 'repeat(7, 1fr)'
                   },
-                  gap: 2,
-                  width: '100%'
+                  gap: { 
+                    xs: 3,    // 24px gap on mobile
+                    sm: 2.5,  // 20px gap on tablet
+                    md: 3     // 24px gap on desktop
+                  },
+                  width: '100%',
+                  mb: { xs: 10, sm: 12 } // Added bottom margin to account for fixed button container
                 }}
               >
                 {mealCards.map((card) => (
