@@ -10,7 +10,7 @@ import {
   saveAttributes,
   getAttributes,
 } from './utils/storageUtils';
-import { ThemeProvider, CssBaseline, Grid, Container, AppBar, Toolbar, IconButton, Box, Typography } from '@mui/material';
+import { ThemeProvider, CssBaseline, Grid, AppBar, IconButton, Box, Typography } from '@mui/material';
 import theme from './theme';
 import SettingsIcon from '@mui/icons-material/Settings';
 import StyleIcon from '@mui/icons-material/Style';
@@ -186,7 +186,6 @@ const App: React.FC = () => {
   // Update handleShuffleAll to reorder instead of regenerate
   const handleShuffleAll = () => {
     setMealCards((prevCards) => {
-      const lockedCards = prevCards.filter(card => card.isLocked);
       const unlockedCards = prevCards.filter(card => !card.isLocked);
       
       // Fisher-Yates shuffle for unlocked cards

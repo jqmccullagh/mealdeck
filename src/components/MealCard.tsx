@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Card,
   CardContent,
-  CardActions,
   Typography,
   IconButton,
   List,
@@ -12,8 +11,6 @@ import {
   Button,
   Box,
 } from '@mui/material';
-import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CasinoIcon from '@mui/icons-material/Casino';
 
 interface MealAttribute {

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
+import React, { useState, KeyboardEvent } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -23,11 +23,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddIcon from '@mui/icons-material/Add';
-
-interface AttributeCategory {
-  title: string;
-  items: string[];
-}
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -283,4 +278,4 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   );
 };
 
-export default SettingsModal; 
+export default SettingsModal;
