@@ -13,6 +13,10 @@ import { ThemeProvider, CssBaseline, Grid, AppBar, IconButton, Box, Typography }
 import theme from './theme';
 import SettingsIcon from '@mui/icons-material/Settings';
 import StyleIcon from '@mui/icons-material/Style';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ShuffleIcon from '@mui/icons-material/Shuffle';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 import './App.css'; // Ensure you import your CSS file
 
 interface Attributes {
@@ -225,9 +229,10 @@ const App: React.FC = () => {
         `}
       </style>
       <div style={{
-        background: 'linear-gradient(to right, #D3C4E0, #B2E0B2)', // Light purplish-grey to light green
+        background: 'linear-gradient(to right, #001a0f, #001a0f)', // Very very dark green almost black background
         minHeight: '100vh',
         margin: 0,
+        backgroundColor: '#001a0f' // Very very dark green almost black background
       }}>
         <Box 
           sx={{ 
@@ -235,11 +240,12 @@ const App: React.FC = () => {
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
-            bgcolor: 'background.default',
-            overflow: 'hidden'
+            bgcolor: '#001a0f', // Very very dark green almost black background
+            overflow: 'hidden',
+            background: 'linear-gradient(to right, #001a0f, #001a0f)' // Very very dark green almost black background
           }}
         >
-          <AppBar position="static" color="default" elevation={1} sx={{ width: '100%' }}>
+          <AppBar position="static" sx={{ width: '100%', bgcolor: '#014421' }}> {/* Dark forest green background */}
             <Box sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -257,25 +263,41 @@ const App: React.FC = () => {
                 }
               }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <StyleIcon sx={{ fontSize: '2rem', color: 'primary.main' }} />
+                  <StyleIcon sx={{ fontSize: '2rem', color: 'gold', transform: 'rotate(180deg)' }} /> {/* Gold icon */}
                   <Typography variant="h1" sx={{ 
                     fontSize: '2rem', 
                     fontWeight: 700,
                     m: 0,
                     fontFamily: 'Big Shoulders Display',
                     textTransform: 'uppercase',
-                    letterSpacing: '0.05em'
+                    letterSpacing: '0.05em',
+                    color: 'white' // White text
                   }}>
                     MealDeck
                   </Typography>
                 </Box>
-                <IconButton
+                <Button
                   onClick={() => setIsSettingsOpen(true)}
-                  aria-label="Settings"
-                  size="large"
+                  variant="outlined"
+                  sx={{ 
+                    borderColor: 'gold', // Gold border
+                    color: 'gold', // Gold text
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                    fontSize: '0.85rem', // Decrease font size by 15%
+                    padding: '4px 10px', // Adjust padding to maintain proportions
+                    '&:hover': {
+                      borderColor: 'gold', // Gold border on hover
+                      color: 'gold', // Gold text on hover
+                      backgroundColor: 'transparent',
+                      boxShadow: 'none',
+                    }
+                  }}
                 >
-                  <SettingsIcon />
-                </IconButton>
+                  Customize Ingredients
+                </Button>
               </Box>
             </Box>
           </AppBar>
@@ -303,30 +325,38 @@ const App: React.FC = () => {
                 gap: { xs: 3, sm: 4 }
               }}>
                 {/* Week Navigation */}
-                <Grid container spacing={2} sx={{ mb: 3 }}>
+                <Grid container spacing={2} sx={{ mb: 0 }}> {/* Removed margin-bottom */}
                   <Grid item xs={12}>
                     <Box sx={{ 
                       display: 'flex', 
                       justifyContent: 'space-between', 
                       alignItems: 'center',
                       flexWrap: 'wrap',
-                      gap: '1rem'
+                      gap: '1rem',
+                      px: { xs: 2, sm: 0 } // Add padding on mobile to stick chevrons to the sides
                     }}>
-                      <Button 
-                        variant="secondary" 
+                      <IconButton 
                         onClick={handlePreviousWeek}
+                        aria-label="Previous Week"
+                        size="large"
                         sx={{ 
-                          minWidth: { xs: '100%', sm: 'auto' }
+                          minWidth: { xs: 'auto', sm: 'auto' },
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 0.5,
+                          position: { xs: 'absolute', sm: 'static' }, // Stick to the side on mobile
+                          left: { xs: 0, sm: 'auto' } // Stick to the left side on mobile
                         }}
                       >
-                        Previous Week
-                      </Button>
+                        <ChevronLeftIcon sx={{ fontSize: '3rem', color: 'gold' }} /> {/* Gold icon */}
+                      </IconButton>
                       <Typography 
                         variant="h6" 
                         sx={{ 
-                          fontSize: '1.125rem', 
-                          fontWeight: 500,
-                          order: { xs: -1, sm: 0 },
+                          fontSize: '1.5rem', // Slightly larger
+                          fontWeight: 700, // Bolder
+                          color: 'white', // White text
+                          order: { xs: 0, sm: 0 },
                           width: { xs: '100%', sm: 'auto' },
                           textAlign: { xs: 'center', sm: 'left' },
                           fontFamily: 'Big Shoulders Display'
@@ -334,15 +364,21 @@ const App: React.FC = () => {
                       >
                         {weekInfo.displayRange}
                       </Typography>
-                      <Button 
-                        variant="secondary" 
+                      <IconButton 
                         onClick={handleNextWeek}
+                        aria-label="Next Week"
+                        size="large"
                         sx={{ 
-                          minWidth: { xs: '100%', sm: 'auto' }
+                          minWidth: { xs: 'auto', sm: 'auto' },
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 0.5,
+                          position: { xs: 'absolute', sm: 'static' }, // Stick to the side on mobile
+                          right: { xs: 0, sm: 'auto' } // Stick to the right side on mobile
                         }}
                       >
-                        Next Week
-                      </Button>
+                        <ChevronRightIcon sx={{ fontSize: '3rem', color: 'gold' }} /> {/* Gold icon */}
+                      </IconButton>
                     </Box>
                   </Grid>
                 </Grid>
@@ -361,18 +397,20 @@ const App: React.FC = () => {
                     rowGap: { 
                       xs: 8,
                       sm: 8,
-                      md: 8
+                      md: 12, // Add extra vertical padding for tablet breakpoint
+                      lg: 8 // Ensure enough row gap for tablet breakpoint
                     },
                     columnGap: {
                       xs: 4,
                       sm: 4,
                       md: 4,
+                      lg: 4, // Ensure enough column gap for tablet breakpoint
                       xl: 2.5  // 20px gap at xl
                     },
                     width: '100%',
                     mb: { xs: 12, sm: 14 },
                     px: { xs: 2, sm: 3, md: 4, xl: 2 },
-                    py: { xs: 3, sm: 4, md: 5 },
+                    py: { xs: 0, sm: 0, md: 0 }, // Removed padding above the card area
                     justifyContent: 'center'  // Center the grid when using fixed widths
                   }}
                 >
@@ -406,7 +444,7 @@ const App: React.FC = () => {
                   position: 'fixed',
                   bottom: 0,
                   left: 0,
-                  bgcolor: 'background.default',
+                  bgcolor: '#014421', // Same green as the header background
                   borderTop: '1px solid',
                   borderColor: 'divider',
                   py: 3
@@ -420,32 +458,58 @@ const App: React.FC = () => {
                   }}
                 >
                   <Grid container spacing={2} justifyContent="center">
-                    <Grid item xs={12} sm="auto">
+                    <Grid item xs={6} sm="auto"> {/* Adjusted to take half width on mobile */}
                       <Button
-                        variant="primary"
+                        variant="outlined"
                         onClick={handleShuffleAll}
                         sx={{ 
-                          width: { xs: '100%', sm: 'auto' },
-                          minWidth: { sm: '200px' }
+                          width: '100%', // Full width on mobile
+                          minWidth: { sm: '200px' },
+                          backgroundColor: 'transparent', // Transparent background
+                          color: 'gold', // Gold text
+                          borderColor: 'gold', // Gold border
+                          boxShadow: 'none',
+                          borderWidth: '1px',
+                          borderStyle: 'solid',
+                          '&:hover': {
+                            backgroundColor: 'transparent', // Transparent background on hover
+                            color: 'gold', // Gold text on hover
+                            borderColor: 'gold', // Gold border on hover
+                            boxShadow: 'none'
+                          }
                         }}
                       >
-                        Shuffle All
+                        Shuffle
+                        <ShuffleIcon sx={{ ml: 1, color: 'gold' }} /> {/* Gold icon */}
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm="auto">
+                    <Grid item xs={6} sm="auto"> {/* Adjusted to take half width on mobile */}
                       <Button
-                        variant="primary"
+                        variant="outlined"
                         onClick={() => {
                           mealCards
                             .filter(card => !card.isLocked)
                             .forEach(card => handleDrawAgain(card.id));
                         }}
                         sx={{ 
-                          width: { xs: '100%', sm: 'auto' },
-                          minWidth: { sm: '200px' }
+                          width: '100%', // Full width on mobile
+                          minWidth: { sm: '200px' },
+                          backgroundColor: 'transparent', // Transparent background
+                          color: 'gold', // Gold text
+                          borderColor: 'gold', // Gold border
+                          boxShadow: 'none',
+                          borderWidth: '1px',
+                          borderStyle: 'solid',
+                          '&:hover': {
+                            backgroundColor: 'transparent', // Transparent background on hover
+                            color: 'gold', // Gold text on hover
+                            borderColor: 'gold', // Gold border on hover
+                            boxShadow: 'none'
+                          }
                         }}
                       >
-                        Draw All Unlocked
+                        Draw Again
+                        <AutorenewIcon sx={{ ml: 1, color: 'gold' }} /> {/* Gold icon */}
                       </Button>
                     </Grid>
                   </Grid>
