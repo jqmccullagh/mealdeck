@@ -11,7 +11,6 @@ import {
 } from './utils/storageUtils';
 import { ThemeProvider, CssBaseline, Grid, AppBar, IconButton, Box, Typography } from '@mui/material';
 import theme from './theme';
-import SettingsIcon from '@mui/icons-material/Settings';
 import StyleIcon from '@mui/icons-material/Style';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -278,7 +277,7 @@ const App: React.FC = () => {
                 </Box>
                 <Button
                   onClick={() => setIsSettingsOpen(true)}
-                  variant="outlined"
+                  variant="primary" // Changed to "primary"
                   sx={{ 
                     borderColor: 'gold', // Gold border
                     color: 'gold', // Gold text
@@ -460,7 +459,7 @@ const App: React.FC = () => {
                   <Grid container spacing={2} justifyContent="center">
                     <Grid item xs={6} sm="auto"> {/* Adjusted to take half width on mobile */}
                       <Button
-                        variant="outlined"
+                        variant="primary" // Changed to "primary"
                         onClick={handleShuffleAll}
                         sx={{ 
                           width: '100%', // Full width on mobile
@@ -485,7 +484,7 @@ const App: React.FC = () => {
                     </Grid>
                     <Grid item xs={6} sm="auto"> {/* Adjusted to take half width on mobile */}
                       <Button
-                        variant="outlined"
+                        variant="primary" // Changed to "primary"
                         onClick={() => {
                           mealCards
                             .filter(card => !card.isLocked)
