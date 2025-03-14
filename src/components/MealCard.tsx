@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -12,6 +12,7 @@ import {
   Box,
 } from '@mui/material';
 import CasinoOutlinedIcon from '@mui/icons-material/CasinoOutlined';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 interface MealAttribute {
   category: string;
@@ -25,7 +26,7 @@ interface MealCardProps {
   isLocked: boolean;
   recipeTitle?: string;
   onLockToggle: (id: string) => void;
-  onGenerateTitle: (id: string) => void;
+  onGenerateTitle: (id: string) => string;
   onRedrawAttribute: (id: string, category: string) => void;
   onDrawAgain: (id: string) => void;
 }
@@ -41,8 +42,77 @@ const MealCard: React.FC<MealCardProps> = ({
   onRedrawAttribute,
   onDrawAgain,
 }) => {
+  const [generatedTitle, setGeneratedTitle] = useState<string | null>(null);
+
+  const handleGenerateTitle = () => {
+    console.log("Generating title...");
+    const newTitle = onGenerateTitle(id);
+    if (newTitle) {
+      setGeneratedTitle(newTitle);
+    }
+  };
+
+  const handleRedrawAttribute = (category: string) => {
+    onRedrawAttribute(id, category);
+    setGeneratedTitle(null);
+  };
+
+  const handleDrawAgain = (id: string) => {
+    onDrawAgain(id);
+    setGeneratedTitle(null);
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'flex-start',
+        marginBottom: '0.75rem'
+      }}>
+        <Box>
+          <Typography 
+            variant="h6" 
+            component="div" 
+            sx={{ 
+              fontSize: { xs: '0.75rem', sm: '0.85rem' },
+              textTransform: 'uppercase',
+              lineHeight: 1.2,
+              fontWeight: 600,
+              color: '#4a0072'
+            }}
+          >
+            {date.split(',')[0]}
+          </Typography>
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              fontSize: { xs: '0.7rem', sm: '0.8rem' },
+              lineHeight: 1.2,
+              color: 'text.secondary',
+              fontWeight: 400
+            }}
+          >
+            {date.split(',')[1].trim()}
+          </Typography>
+        </Box>
+        <Button
+          onClick={() => onLockToggle(id)}
+          size="small"
+          variant={isLocked ? "contained" : "outlined"}
+          color={isLocked ? "primary" : "inherit"}
+          sx={{ 
+            minWidth: 'auto',
+            padding: '4px 12px',
+            fontSize: '0.82rem',
+            lineHeight: 1,
+            height: 'auto'
+          }}
+        >
+          Hold
+        </Button>
+      </div>
+
       <Card 
         sx={{ 
           height: '100%',
@@ -61,70 +131,6 @@ const MealCard: React.FC<MealCardProps> = ({
         }}
       >
         <CardContent sx={{ flexGrow: 1, pb: 1 }}>
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'flex-start',
-            marginBottom: '0.75rem'
-          }}>
-            <Box>
-              <Typography 
-                variant="h6" 
-                component="div" 
-                sx={{ 
-                  fontSize: { xs: '0.75rem', sm: '0.85rem' },
-                  textTransform: 'uppercase',
-                  lineHeight: 1.2,
-                  fontWeight: 600,
-                  color: '#4a0072'
-                }}
-              >
-                {date.split(',')[0]}
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  fontSize: { xs: '0.7rem', sm: '0.8rem' },
-                  lineHeight: 1.2,
-                  color: 'text.secondary',
-                  fontWeight: 400
-                }}
-              >
-                {date.split(',')[1].trim()}
-              </Typography>
-            </Box>
-            <Button
-              onClick={() => onLockToggle(id)}
-              size="small"
-              variant={isLocked ? "contained" : "outlined"}
-              color={isLocked ? "primary" : "inherit"}
-              sx={{ 
-                minWidth: 'auto',
-                padding: '1px 6px',
-                fontSize: '0.6rem',
-                lineHeight: 1,
-                height: 'auto'
-              }}
-            >
-              Hold
-            </Button>
-          </div>
-
-          {recipeTitle && (
-            <Typography 
-              variant="subtitle1" 
-              sx={{ 
-                mb: 1.5,
-                fontSize: '0.7rem',
-                fontWeight: 500,
-                fontStyle: 'italic',
-                color: 'text.primary'
-              }}
-            >
-              {recipeTitle}
-            </Typography>
-          )}
-
           <List dense sx={{ p: 0 }}>
             {attributes.map((attr) => (
               <ListItem
@@ -164,7 +170,7 @@ const MealCard: React.FC<MealCardProps> = ({
                   <IconButton
                     edge="end"
                     size="small"
-                    onClick={() => onRedrawAttribute(id, attr.category)}
+                    onClick={() => handleRedrawAttribute(attr.category)}
                     disabled={isLocked}
                     sx={{
                       padding: '2px',
@@ -185,33 +191,42 @@ const MealCard: React.FC<MealCardProps> = ({
               </ListItem>
             ))}
           </List>
-          <Button
-            onClick={() => onDrawAgain(id)}
-            size="small"
-            variant="outlined"
-            sx={{ 
-              minWidth: 'auto',
-              padding: '1px 6px',
-              fontSize: '0.6rem',
-              lineHeight: 1,
-              height: 'auto',
-              mt: 1
+
+          <Typography
+            variant="body2"
+            onClick={handleGenerateTitle}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              cursor: 'pointer',
+              color: 'primary.main',
+              mt: 2,
+              fontSize: '13px !important',
+              '&.MuiTypography-body2': {
+                fontSize: '13px !important'
+              }
             }}
           >
-            Draw Again
-          </Button>
+            <RefreshIcon sx={{ mr: 0.5, fontSize: '0.9rem' }} />
+            {generatedTitle ? generatedTitle : 'Generate Title'}
+          </Typography>
         </CardContent>
       </Card>
+
       <Button
+        onClick={() => handleDrawAgain(id)}
         size="small"
         variant="outlined"
-        onClick={() => onGenerateTitle(id)}
-        fullWidth
         sx={{ 
-          fontSize: { xs: '0.75rem', sm: '0.875rem' }
+          minWidth: 'auto',
+          padding: '4px 12px',
+          fontSize: '0.82rem',
+          lineHeight: 1,
+          height: 'auto',
+          mb: 2
         }}
       >
-        Generate Title
+        Draw Again
       </Button>
     </Box>
   );

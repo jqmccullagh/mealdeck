@@ -14,6 +14,7 @@ import { ThemeProvider, CssBaseline, Grid, AppBar, IconButton, Box, Typography }
 import theme from './theme';
 import SettingsIcon from '@mui/icons-material/Settings';
 import StyleIcon from '@mui/icons-material/Style';
+import './App.css'; // Ensure you import your CSS file
 
 interface Attributes {
   protein: string[];
@@ -72,8 +73,8 @@ const App: React.FC = () => {
         date: `${day.name}, ${day.displayDate}`,
         displayDate: day.displayDate,
         attributes: generateRandomMeal(),
-        isLocked: false,
-        recipeTitle: '',
+      isLocked: false,
+      recipeTitle: '',
       }));
       setMealCards(newMealCards);
       
@@ -152,18 +153,13 @@ const App: React.FC = () => {
     );
   };
 
-  const handleGenerateTitle = (id: string) => {
-    setMealCards((prevCards) =>
-      prevCards.map((card) => {
-        if (card.id === id) {
-          return {
-            ...card,
-            recipeTitle: generateRecipeTitle(card.attributes),
-          };
-        }
-        return card;
-      })
-    );
+  const handleGenerateTitle = (id: string): string => {
+    const mealCard = mealCards.find(card => card.id === id);
+    if (mealCard) {
+      const title = `Delicious ${mealCard.attributes.map(attr => attr.value).join(', ')}`;
+      return title; // Ensure this returns the generated title
+    }
+    return ''; // Return an empty string if not found
   };
 
   const handleUpdateAttribute = (category: string, items: string[]) => {
@@ -229,235 +225,245 @@ const App: React.FC = () => {
           }
         `}
       </style>
-      <Box 
-        sx={{ 
-          width: '100vw',
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          bgcolor: 'background.default',
-          overflow: 'hidden'
-        }}
-      >
-        <AppBar position="static" color="default" elevation={1} sx={{ width: '100%' }}>
+      <div style={{
+        background: 'linear-gradient(to right, #D3C4E0, #B2E0B2)', // Light purplish-grey to light green
+        minHeight: '100vh',
+        margin: 0,
+      }}>
+        <Box 
+          sx={{ 
+            width: '100vw',
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            bgcolor: 'background.default',
+            overflow: 'hidden'
+          }}
+        >
+          <AppBar position="static" color="default" elevation={1} sx={{ width: '100%' }}>
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%'
+            }}>
+              <Box sx={{ 
+                width: '1400px',
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center', 
+                py: 1,
+                px: 3,
+                '@media (max-width: 1400px)': {
+                  width: '100%'
+                }
+              }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <StyleIcon sx={{ fontSize: '2rem', color: 'primary.main' }} />
+                  <Typography variant="h1" sx={{ 
+                    fontSize: '2rem', 
+                    fontWeight: 700,
+                    m: 0,
+                    fontFamily: 'Big Shoulders Display',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>
+                    MealDeck
+                  </Typography>
+                </Box>
+                <IconButton
+                  onClick={() => setIsSettingsOpen(true)}
+                  aria-label="Settings"
+                  size="large"
+                >
+                  <SettingsIcon />
+                </IconButton>
+              </Box>
+            </Box>
+          </AppBar>
+
           <Box sx={{
             display: 'flex',
             justifyContent: 'center',
-            width: '100%'
+            width: '100%',
+            padding: { xs: '24px', sm: '32px', md: '40px' }
           }}>
-            <Box sx={{ 
-              width: '1400px',
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center', 
-              py: 1,
-              px: 3,
-              '@media (max-width: 1400px)': {
-                width: '100%'
-              }
-            }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <StyleIcon sx={{ fontSize: '2rem', color: 'primary.main' }} />
-                <Typography variant="h1" sx={{ 
-                  fontSize: '2rem', 
-                  fontWeight: 700,
-                  m: 0,
-                  fontFamily: 'Big Shoulders Display',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em'
-                }}>
-                  MealDeck
-                </Typography>
-              </Box>
-              <IconButton
-                onClick={() => setIsSettingsOpen(true)}
-                aria-label="Settings"
-                size="large"
-              >
-                <SettingsIcon />
-              </IconButton>
-            </Box>
-          </Box>
-        </AppBar>
-
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          width: '100%',
-          padding: { xs: '24px', sm: '32px', md: '40px' }
-        }}>
-          <Box 
-            sx={{ 
-              width: '1400px',
-              display: 'flex',
-              flexDirection: 'column',
-              '@media (max-width: 1400px)': {
-                width: '100%'
-              }
-            }}
-          >
-            <Box sx={{ 
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: { xs: 3, sm: 4 }
-            }}>
-              {/* Week Navigation */}
-              <Grid container spacing={2} sx={{ mb: 3 }}>
-                <Grid item xs={12}>
-                  <Box sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                    gap: '1rem'
-                  }}>
-                    <Button 
-                      variant="secondary" 
-                      onClick={handlePreviousWeek}
-                      sx={{ 
-                        minWidth: { xs: '100%', sm: 'auto' }
-                      }}
-                    >
-                      Previous Week
-                    </Button>
-                    <Typography 
-                      variant="h6" 
-                      sx={{ 
-                        fontSize: '1.125rem', 
-                        fontWeight: 500,
-                        order: { xs: -1, sm: 0 },
-                        width: { xs: '100%', sm: 'auto' },
-                        textAlign: { xs: 'center', sm: 'left' },
-                        fontFamily: 'Big Shoulders Display'
-                      }}
-                    >
-                      {weekInfo.displayRange}
-                    </Typography>
-                    <Button 
-                      variant="secondary" 
-                      onClick={handleNextWeek}
-                      sx={{ 
-                        minWidth: { xs: '100%', sm: 'auto' }
-                      }}
-                    >
-                      Next Week
-                    </Button>
-                  </Box>
-                </Grid>
-              </Grid>
-
-              {/* Card Grid */}
-              <Box 
-                sx={{ 
-                  display: 'grid',
-                  gridTemplateColumns: {
-                    xs: '1fr',
-                    sm: 'repeat(2, 1fr)',
-                    md: 'repeat(4, 1fr)',
-                    lg: 'repeat(5, 1fr)',
-                    xl: 'repeat(7, 185px)'  // Fixed width of 185px at xl breakpoint
-                  },
-                  rowGap: { 
-                    xs: 8,
-                    sm: 8,
-                    md: 8
-                  },
-                  columnGap: {
-                    xs: 4,
-                    sm: 4,
-                    md: 4,
-                    xl: 2.5  // 20px gap at xl
-                  },
-                  width: '100%',
-                  mb: { xs: 12, sm: 14 },
-                  px: { xs: 2, sm: 3, md: 4, xl: 2 },
-                  py: { xs: 3, sm: 4, md: 5 },
-                  justifyContent: 'center'  // Center the grid when using fixed widths
-                }}
-              >
-                {mealCards.map((card) => (
-                  <Box 
-                    key={card.id}
-                    sx={{
-                      height: '340px',
-                      width: '100%'
-                    }}
-                  >
-                    <MealCard
-                      {...card}
-                      onLockToggle={handleLockToggle}
-                      onGenerateTitle={handleGenerateTitle}
-                      onRedrawAttribute={handleRedrawAttribute}
-                      onDrawAgain={handleDrawAgain}
-                    />
-                  </Box>
-                ))}
-              </Box>
-            </Box>
-
-            {/* Action Buttons Container */}
             <Box 
               sx={{ 
-                width: '100%',
-                position: 'fixed',
-                bottom: 0,
-                left: 0,
-                bgcolor: 'background.default',
-                borderTop: '1px solid',
-                borderColor: 'divider',
-                py: 3
+                width: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                '@media (max-width: 1400px)': {
+                  width: '100%'
+                }
               }}
             >
-              <Box 
-                sx={{ 
-                  maxWidth: '1400px',
-                  margin: '0 auto',
-                  px: 3
-                }}
-              >
-                <Grid container spacing={2} justifyContent="center">
-                  <Grid item xs={12} sm="auto">
-                    <Button
-                      variant="primary"
-                      onClick={handleShuffleAll}
-                      sx={{ 
-                        width: { xs: '100%', sm: 'auto' },
-                        minWidth: { sm: '200px' }
-                      }}
-                    >
-                      Shuffle All
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} sm="auto">
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        mealCards
-                          .filter(card => !card.isLocked)
-                          .forEach(card => handleDrawAgain(card.id));
-                      }}
-                      sx={{ 
-                        width: { xs: '100%', sm: 'auto' },
-                        minWidth: { sm: '200px' }
-                      }}
-                    >
-                      Draw All Unlocked
-                    </Button>
+              <Box sx={{ 
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: { xs: 3, sm: 4 }
+              }}>
+                {/* Week Navigation */}
+                <Grid container spacing={2} sx={{ mb: 3 }}>
+                  <Grid item xs={12}>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                      gap: '1rem'
+                    }}>
+                      <Button 
+                        variant="secondary" 
+                        onClick={handlePreviousWeek}
+                        sx={{ 
+                          minWidth: { xs: '100%', sm: 'auto' }
+                        }}
+                      >
+                        Previous Week
+                      </Button>
+                      <Typography 
+                        variant="h6" 
+                        sx={{ 
+                          fontSize: '1.125rem', 
+                          fontWeight: 500,
+                          order: { xs: -1, sm: 0 },
+                          width: { xs: '100%', sm: 'auto' },
+                          textAlign: { xs: 'center', sm: 'left' },
+                          fontFamily: 'Big Shoulders Display'
+                        }}
+                      >
+                        {weekInfo.displayRange}
+                      </Typography>
+                      <Button 
+                        variant="secondary" 
+                        onClick={handleNextWeek}
+                        sx={{ 
+                          minWidth: { xs: '100%', sm: 'auto' }
+                        }}
+                      >
+                        Next Week
+                      </Button>
+                    </Box>
                   </Grid>
                 </Grid>
-              </Box>
-            </Box>
 
-            <SettingsModal
-              isOpen={isSettingsOpen}
-              onClose={() => setIsSettingsOpen(false)}
-              attributes={attributes}
-              onUpdateAttribute={handleUpdateAttribute}
-            />
+                {/* Card Grid */}
+                <Box 
+                  sx={{ 
+                    display: 'grid',
+                    gridTemplateColumns: {
+                      xs: '1fr',
+                      sm: 'repeat(2, 1fr)',
+                      md: 'repeat(4, 1fr)',
+                      lg: 'repeat(5, 1fr)',
+                      xl: 'repeat(7, 185px)'  // Fixed width of 185px at xl breakpoint
+                    },
+                    rowGap: { 
+                      xs: 8,
+                      sm: 8,
+                      md: 8
+                    },
+                    columnGap: {
+                      xs: 4,
+                      sm: 4,
+                      md: 4,
+                      xl: 2.5  // 20px gap at xl
+                    },
+                    width: '100%',
+                    mb: { xs: 12, sm: 14 },
+                    px: { xs: 2, sm: 3, md: 4, xl: 2 },
+                    py: { xs: 3, sm: 4, md: 5 },
+                    justifyContent: 'center'  // Center the grid when using fixed widths
+                  }}
+                >
+                  {mealCards.map((card) => (
+                    <Box 
+                      key={card.id}
+                      sx={{
+                        height: '340px',
+                        width: '100%'
+                      }}
+                    >
+            <MealCard
+              id={card.id}
+              date={card.date}
+              attributes={card.attributes}
+              isLocked={card.isLocked}
+              recipeTitle={card.recipeTitle}
+              onLockToggle={handleLockToggle}
+              onGenerateTitle={handleGenerateTitle}
+                        onRedrawAttribute={handleRedrawAttribute}
+                        onDrawAgain={handleDrawAgain}
+                      />
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+
+              {/* Action Buttons Container */}
+              <Box 
+                sx={{ 
+                  width: '100%',
+                  position: 'fixed',
+                  bottom: 0,
+                  left: 0,
+                  bgcolor: 'background.default',
+                  borderTop: '1px solid',
+                  borderColor: 'divider',
+                  py: 3
+                }}
+              >
+                <Box 
+                  sx={{ 
+                    maxWidth: '1400px',
+                    margin: '0 auto',
+                    px: 3
+                  }}
+                >
+                  <Grid container spacing={2} justifyContent="center">
+                    <Grid item xs={12} sm="auto">
+                      <Button
+                        variant="primary"
+                        onClick={handleShuffleAll}
+                        sx={{ 
+                          width: { xs: '100%', sm: 'auto' },
+                          minWidth: { sm: '200px' }
+                        }}
+                      >
+                        Shuffle All
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} sm="auto">
+                      <Button
+                        variant="primary"
+                        onClick={() => {
+                          mealCards
+                            .filter(card => !card.isLocked)
+                            .forEach(card => handleDrawAgain(card.id));
+                        }}
+                        sx={{ 
+                          width: { xs: '100%', sm: 'auto' },
+                          minWidth: { sm: '200px' }
+                        }}
+                      >
+                        Draw All Unlocked
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+
+              <SettingsModal
+                isOpen={isSettingsOpen}
+                onClose={() => setIsSettingsOpen(false)}
+                attributes={attributes}
+                onUpdateAttribute={handleUpdateAttribute}
+              />
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </div>
     </ThemeProvider>
   );
 };
