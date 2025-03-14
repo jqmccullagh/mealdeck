@@ -24,7 +24,6 @@ interface MealCardProps {
   date: string;
   attributes: MealAttribute[];
   isLocked: boolean;
-  recipeTitle?: string;
   onLockToggle: (id: string) => void;
   onGenerateTitle: (id: string) => string;
   onRedrawAttribute: (id: string, category: string) => void;
@@ -36,7 +35,6 @@ const MealCard: React.FC<MealCardProps> = ({
   date,
   attributes,
   isLocked,
-  recipeTitle,
   onLockToggle,
   onGenerateTitle,
   onRedrawAttribute,

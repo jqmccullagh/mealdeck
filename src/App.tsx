@@ -3,7 +3,6 @@ import MealCard from './components/MealCard';
 import SettingsModal from './components/settings/SettingsModal';
 import Button from './components/ui/Button';
 import { getWeekDates, WeekInfo } from './utils/dateUtils';
-import { generateRecipeTitle } from './utils/recipeUtils';
 import {
   saveMealPlans,
   getWeekMealPlan,
@@ -390,7 +389,6 @@ const App: React.FC = () => {
               date={card.date}
               attributes={card.attributes}
               isLocked={card.isLocked}
-              recipeTitle={card.recipeTitle}
               onLockToggle={handleLockToggle}
               onGenerateTitle={handleGenerateTitle}
                         onRedrawAttribute={handleRedrawAttribute}
